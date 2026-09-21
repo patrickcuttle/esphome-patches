@@ -199,7 +199,9 @@ async def to_code(config):
     model = MODELS[config[CONF_MODEL].upper()]
     color_depth = COLOR_DEPTHS[get_color_depth(config)]
     pixel_mode = int(config[CONF_PIXEL_MODE].removesuffix("bit"))
-    width, height, _offset_width, _offset_height = model.get_dimensions(config)
+    width, height, _offset_width, _offset_height, _pad_width, _pad_height = (
+        model.get_dimensions(config)
+    )
     var = cg.new_Pvariable(config[CONF_ID], width, height, color_depth, pixel_mode)
 
     sequence, madctl = model.get_sequence(config)
