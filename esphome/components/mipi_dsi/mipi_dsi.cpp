@@ -94,7 +94,7 @@ void MIPI_DSI::setup() {
   auto &vec = this->init_sequence_;
   while (index != vec.size()) {
     if (vec.size() - index < 2) {
-      this->mark_failed("Malformed init sequence");
+      this->mark_failed(LOG_STR("Malformed init sequence"));
       return;
     }
     uint8_t cmd = vec[index++];
@@ -105,7 +105,7 @@ void MIPI_DSI::setup() {
     } else {
       uint8_t num_args = x & 0x7F;
       if (vec.size() - index < num_args) {
-        this->mark_failed("Malformed init sequence");
+        this->mark_failed(LOG_STR("Malformed init sequence"));
         return;
       }
       if (cmd == SLEEP_OUT) {
@@ -217,7 +217,7 @@ bool MIPI_DSI::check_buffer_() {
   RAMAllocator<uint8_t> allocator;
   this->buffer_ = allocator.allocate(this->height_ * this->width_ * bytes_per_pixel);
   if (this->buffer_ == nullptr) {
-    this->mark_failed("Could not allocate buffer for display!");
+    this->mark_failed(LOG_STR("Could not allocate buffer for display!"));
     return false;
   }
   return true;
