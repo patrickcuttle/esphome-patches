@@ -204,7 +204,8 @@ async def to_code(config):
     )
     var = cg.new_Pvariable(config[CONF_ID], width, height, color_depth, pixel_mode)
 
-    sequence, madctl = model.get_sequence(config)
+    sequence = model.get_sequence(config)
+    madctl = model.get_madctl(model.get_transform(config), config)
     cg.add(var.set_model(config[CONF_MODEL]))
     cg.add(var.set_init_sequence(sequence))
     cg.add(var.set_madctl(madctl))
